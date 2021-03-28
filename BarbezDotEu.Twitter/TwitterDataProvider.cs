@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -54,8 +55,9 @@ namespace BarbezDotEu.Twitter
             request.Headers.Authorization = this.authorizationHeader;
             var result = await this.Request<TwitterResponse>(request);
 
-            if (result?.TwitterMetaData == null)
-                throw new TwitterDataProviderException();
+            // Ensuring app fails when hitting rate limit.
+            if (result.HasFailed && result.FailedResponse.StatusCode == HttpStatusCode.TooManyRequests)
+                throw new TwitterDataProviderException(result.FailedResponse.StatusCode.ToString());
                 
             if (result.TwitterMetaData.ResultCount == default)
                 return new List<MicroBlogEntry>();

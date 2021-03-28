@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace BarbezDotEu.Twitter.DTO
 {
-    public class TwitterResponse : IHasHttpResponseMessage
+    public class TwitterResponse : ICanFail
     {
         [JsonProperty("data")]
         public List<Tweet> Data { get; set; }
@@ -17,6 +17,9 @@ namespace BarbezDotEu.Twitter.DTO
         public TwitterMetaData TwitterMetaData { get; set; }
 
         /// <inheritdoc/>
-        public HttpResponseMessage HttpResponseMessage { get; set; }
+        public HttpResponseMessage FailedResponse { get; set; }
+
+        /// <inheritdoc/>
+        public bool HasFailed => FailedResponse != null;
     }
 }
