@@ -55,10 +55,26 @@ namespace BarbezDotEu.Twitter
             request.Headers.Authorization = this.authorizationHeader;
             var result = await this.Request<TwitterResponse>(request);
 
-            // Ensuring app fails when hitting rate limit.
-            if (result.HasFailed && result.FailedResponse.StatusCode == HttpStatusCode.TooManyRequests)
-                throw new TwitterDataProviderException(result.FailedResponse.StatusCode.ToString());
-                
+            if (result.HasFailed)
+            {
+                // Ensuring app fails when hitting rate limit.
+                if (result.FailedResponse.StatusCode == HttpStatusCode.TooManyRequests)
+                {
+                    this.logger.LogWarning("Too many requests to Twitter. Erroring out, shutting down.");
+                    throw new TwitterDataProviderException(result.FailedResponse.StatusCode.ToString());
+                }
+
+                // Else, just log and continue.
+                var response = result?.FailedResponse;
+                var reason = response?.ReasonPhrase ?? "No reason phrase given."
+                    + " " + response?.StatusCode ?? "No status code given"
+                    + " " + response?.Content ?? "No content given";
+
+                this.logger.LogWarning($"Failed request reason: {reason}");
+                this.logger.LogWarning($"Failed request response: {response}");
+                return new List<MicroBlogEntry>();
+            }
+
             if (result.TwitterMetaData.ResultCount == default)
                 return new List<MicroBlogEntry>();
 
@@ -154,7 +170,15 @@ namespace BarbezDotEu.Twitter
             request.Content = new FormUrlEncodedContent(content);
             request.Headers.Accept.Add(this.acceptHeader);
             request.Headers.Authorization = this.GetAuthenticationHeaderValue();
-            return await this.Request<PostClientAuthorizeResponse>(request);
+            var response = await this.Request<PostClientAuthorizeResponse>(request);
+            if (response.HasFailed)
+            {
+                var error = $"Failed request resulted in the following response (and also, the app will shut down): {response.FailedResponse}";
+                this.logger.LogError(error);
+                throw new TwitterDataProviderException(error);
+            }
+
+            return response;
         }
 
         private AuthenticationHeaderValue GetAuthenticationHeaderValue()

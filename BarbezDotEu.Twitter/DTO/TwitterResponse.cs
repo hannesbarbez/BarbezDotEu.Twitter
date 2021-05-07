@@ -11,7 +11,7 @@ namespace BarbezDotEu.Twitter.DTO
     public class TwitterResponse : ICanFail
     {
         [JsonProperty("data")]
-        public List<Tweet> Data { get; set; }
+        public List<Tweet> Data { get; set; } = new List<Tweet>();
 
         [JsonProperty("meta")]
         public TwitterMetaData TwitterMetaData { get; set; }
