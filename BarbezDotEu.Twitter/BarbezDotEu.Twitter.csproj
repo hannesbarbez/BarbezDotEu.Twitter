@@ -12,7 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BarbezDotEu.MicroBlog\BarbezDotEu.MicroBlog\BarbezDotEu.MicroBlog.csproj" />
+    <PackageReference Include="BarbezDotEu.MicroBlog" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\BarbezDotEu.Provider\BarbezDotEu.Provider\BarbezDotEu.Provider\BarbezDotEu.Provider.csproj" />
   </ItemGroup>
 
