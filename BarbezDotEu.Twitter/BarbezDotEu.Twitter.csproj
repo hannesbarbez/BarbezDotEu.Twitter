@@ -13,10 +13,8 @@
 
   <ItemGroup>
     <PackageReference Include="BarbezDotEu.MicroBlog" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\BarbezDotEu.Provider\BarbezDotEu.Provider\BarbezDotEu.Provider\BarbezDotEu.Provider.csproj" />
+    <PackageReference Include="BarbezDotEu.Provider" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
