@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="BarbezDotEu.MicroBlog" Version="1.0.0" />
-    <PackageReference Include="BarbezDotEu.Provider" Version="1.0.0" />
+    <PackageReference Include="BarbezDotEu.Provider" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
   </ItemGroup>
 

@@ -57,14 +57,14 @@ namespace BarbezDotEu.Twitter
             if (result.HasFailed)
             {
                 // Ensuring app fails when hitting rate limit.
-                if (result.FailedResponse.StatusCode == HttpStatusCode.TooManyRequests)
+                if (result.HttpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests)
                 {
                     this.logger.LogWarning("Too many requests to Twitter. Erroring out, shutting down.");
-                    throw new TwitterDataProviderException(result.FailedResponse.StatusCode.ToString());
+                    throw new TwitterDataProviderException(result.HttpResponseMessage.StatusCode.ToString());
                 }
 
                 // Else, just log and continue.
-                var response = result?.FailedResponse;
+                var response = result?.HttpResponseMessage;
                 var reason = response?.ReasonPhrase ?? "No reason phrase given."
                     + " " + response?.StatusCode ?? "No status code given"
                     + " " + response?.Content ?? "No content given";
@@ -74,10 +74,10 @@ namespace BarbezDotEu.Twitter
                 return new List<MicroBlogEntry>();
             }
 
-            if (result.TwitterMetaData.ResultCount == default)
+            if (result.Content.TwitterMetaData.ResultCount == default)
                 return new List<MicroBlogEntry>();
 
-            return TweetsAsMicroBlogEntries(result.Data);
+            return TweetsAsMicroBlogEntries(result.Content.Data);
         }
 
         /// <summary>
@@ -172,12 +172,12 @@ namespace BarbezDotEu.Twitter
             var response = await this.Request<PostClientAuthorizeResponse>(request);
             if (response.HasFailed)
             {
-                var error = $"Failed request resulted in the following response (and also, the app will shut down): {response.FailedResponse}";
+                var error = $"Failed request resulted in the following response (and also, the app will shut down): {response.HttpResponseMessage}";
                 this.logger.LogError(error);
                 throw new TwitterDataProviderException(error);
             }
 
-            return response;
+            return response.Content;
         }
 
         private AuthenticationHeaderValue GetAuthenticationHeaderValue()
