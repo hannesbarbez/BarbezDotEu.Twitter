@@ -3,13 +3,13 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO
 {
     public class TweetAttachements
     {
-        [JsonProperty("media_keys")]
+        [JsonPropertyName("media_keys")]
         public List<string> MediaKeys { get; set; }
 
         public string GetMediaKeysAsCsv()

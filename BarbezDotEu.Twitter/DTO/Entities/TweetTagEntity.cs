@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Hannes Barbez. All rights reserved.
 // Licensed under the GNU General Public License v3.0
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO.Entities
 {
@@ -10,7 +10,7 @@ namespace BarbezDotEu.Twitter.DTO.Entities
         /// <summary>
         /// Gets or sets the hash- or cashtag.
         /// </summary>
-        [JsonProperty("tag")]
+        [JsonPropertyName("tag")]
         public string Tag { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Hannes Barbez. All rights reserved.
 // Licensed under the GNU General Public License v3.0
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO.Entities
 {
@@ -10,13 +10,13 @@ namespace BarbezDotEu.Twitter.DTO.Entities
         /// <summary>
         /// Gets or set the index of the first character of the entity in the tweet.
         /// </summary>
-        [JsonProperty("start")]
+        [JsonPropertyName("start")]
         public long Start { get; set; }
 
         /// <summary>
         /// Gets or set the index of the last character of the entity in the tweet.
         /// </summary>
-        [JsonProperty("end")]
+        [JsonPropertyName("end")]
         public long End { get; set; }
     }
 }

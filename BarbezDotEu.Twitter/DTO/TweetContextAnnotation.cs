@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Hannes Barbez. All rights reserved.
 // Licensed under the GNU General Public License v3.0
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO
 {
     public class TweetContextAnnotation
     {
-        [JsonProperty("domain")]
+        [JsonPropertyName("domain")]
         public TweetKeyOrValue Domain { get; set; }
 
-        [JsonProperty("entity")]
+        [JsonPropertyName("entity")]
         public TweetKeyOrValue Entity { get; set; }
     }
 }

@@ -3,17 +3,17 @@
 
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 using BarbezDotEu.Provider.Interfaces;
-using Newtonsoft.Json;
 
 namespace BarbezDotEu.Twitter.DTO
 {
     public class TwitterResponse : ICanFail
     {
-        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public List<Tweet> Data { get; set; } = new List<Tweet>();
 
-        [JsonProperty("meta")]
+        [JsonPropertyName("meta")]
         public TwitterMetaData TwitterMetaData { get; set; }
 
         /// <inheritdoc/>

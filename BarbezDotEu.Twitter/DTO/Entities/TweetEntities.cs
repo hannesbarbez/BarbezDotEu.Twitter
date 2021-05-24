@@ -3,25 +3,25 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO.Entities
 {
     public class TweetEntities
     {
-        [JsonProperty("urls")]
+        [JsonPropertyName("urls")]
         public List<TweetUrlEntity> Urls { get; set; }
 
-        [JsonProperty("cashtags")]
+        [JsonPropertyName("cashtags")]
         public List<TweetTagEntity> CashTags { get; set; }
 
-        [JsonProperty("hashtags")]
+        [JsonPropertyName("hashtags")]
         public List<TweetTagEntity> HashTags { get; set; }
 
-        [JsonProperty("mentions")]
+        [JsonPropertyName("mentions")]
         public List<TweetMentionEntity> Mentions { get; set; }
 
-        [JsonProperty("annotations")]
+        [JsonPropertyName("annotations")]
         public List<TweetAnnotationEntity> Annotations { get; set; }
 
         public string GetCashTagsAsCsv()

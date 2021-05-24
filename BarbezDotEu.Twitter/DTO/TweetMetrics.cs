@@ -1,22 +1,22 @@
 ﻿// Copyright (c) Hannes Barbez. All rights reserved.
 // Licensed under the GNU General Public License v3.0
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO
 {
     public class TweetMetrics
     {
-        [JsonProperty("retweet_count")]
+        [JsonPropertyName("retweet_count")]
         public long RetweetCount { get; set; }
 
-        [JsonProperty("reply_count")]
+        [JsonPropertyName("reply_count")]
         public long ReplyCount { get; set; }
 
-        [JsonProperty("like_count")]
+        [JsonPropertyName("like_count")]
         public long LikeCount { get; set; }
 
-        [JsonProperty("quote_count")]
+        [JsonPropertyName("quote_count")]
         public long QuoteCount { get; set; }
     }
 }

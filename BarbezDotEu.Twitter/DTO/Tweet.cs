@@ -3,50 +3,50 @@
 
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using BarbezDotEu.Twitter.DTO.Entities;
 
 namespace BarbezDotEu.Twitter.DTO
 {
     public class Tweet
     {
-        [JsonProperty("created_at")]
+        [JsonPropertyName("created_at")]
         public DateTime CreatedAt { get; set; }
 
-        [JsonProperty("possibly_sensitive")]
+        [JsonPropertyName("possibly_sensitive")]
         public bool PossiblySensitive { get; set; }
 
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        [JsonProperty("source")]
+        [JsonPropertyName("source")]
         public string Source { get; set; }
 
-        [JsonProperty("conversation_id")]
+        [JsonPropertyName("conversation_id")]
         public string ConversationId { get; set; }
 
-        [JsonProperty("text")]
+        [JsonPropertyName("text")]
         public string Text { get; set; }
 
-        [JsonProperty("reply_settings")]
+        [JsonPropertyName("reply_settings")]
         public string ReplySettings { get; set; }
 
-        [JsonProperty("lang")]
+        [JsonPropertyName("lang")]
         public string Language { get; set; }
 
-        [JsonProperty("author_id")]
+        [JsonPropertyName("author_id")]
         public string AuthorId { get; set; }
 
-        [JsonProperty("context_annotations")]
+        [JsonPropertyName("context_annotations")]
         public List<TweetContextAnnotation> ContextAnnotations { get; set; }
 
-        [JsonProperty("attachments")]
+        [JsonPropertyName("attachments")]
         public TweetAttachements Attachements { get; set; }
 
-        [JsonProperty("public_metrics")]
+        [JsonPropertyName("public_metrics")]
         public TweetMetrics PublicMetrics { get; set; }
 
-        [JsonProperty("entities")]
+        [JsonPropertyName("entities")]
         public TweetEntities TweetEntities { get; set; }
     }
 }
