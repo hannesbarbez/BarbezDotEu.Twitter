@@ -19,7 +19,6 @@ using BarbezDotEu.Twitter.DTO;
 using BarbezDotEu.Twitter.Exceptions;
 using BarbezDotEu.Twitter.Interfaces;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace BarbezDotEu.Twitter
@@ -33,7 +32,7 @@ namespace BarbezDotEu.Twitter
         private readonly string searchRecentTweetsUrl;
         private readonly string searchRecentTweetsFields;
 
-        public TwitterDataProvider(ILogger<IHostedService> logger, IConfiguration configuration, IHttpClientFactory httpClientFactory)
+        public TwitterDataProvider(ILogger logger, IConfiguration configuration, IHttpClientFactory httpClientFactory)
             : base(logger, httpClientFactory)
         {
             this.configuration = configuration;
