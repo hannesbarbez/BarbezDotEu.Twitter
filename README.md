@@ -1,2 +1,2 @@
 # BarbezDotEu.Twitter
-A fast and efficient Twitter client.
+A modern, work-in-progress Twitter client.
