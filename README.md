@@ -1,2 +1,2 @@
 # BarbezDotEu.Twitter
-A modern, work-in-progress Twitter client.
+An unofficial, modern, very much work-in-progress client for Twitter APIs.
