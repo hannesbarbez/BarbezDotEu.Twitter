@@ -9,18 +9,22 @@ namespace BarbezDotEu.Twitter.Exceptions
     [Serializable]
     internal class TwitterDataProviderException : Exception
     {
+        /// <inheritdoc/>
         public TwitterDataProviderException()
         {
         }
 
+        /// <inheritdoc/>
         public TwitterDataProviderException(string message) : base(message)
         {
         }
 
+        /// <inheritdoc/>
         public TwitterDataProviderException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
+        /// <inheritdoc/>
         protected TwitterDataProviderException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }

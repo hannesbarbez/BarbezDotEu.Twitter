@@ -5,6 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO.Entities
 {
+    /// <summary>
+    /// Implements the <see cref="TweetTagEntity"/> DTO as defined by the third-party provider.
+    /// </summary>
     public class TweetTagEntity : TweetBaseEntity
     {
         /// <summary>

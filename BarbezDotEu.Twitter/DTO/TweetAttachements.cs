@@ -7,11 +7,21 @@ using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Twitter.DTO
 {
+    /// <summary>
+    /// Implements the <see cref="TweetAttachements"/> DTO as defined by the third-party provider.
+    /// </summary>
     public class TweetAttachements
     {
+        /// <summary>
+        /// Gets or sets the media keys.
+        /// </summary>
         [JsonPropertyName("media_keys")]
         public List<string> MediaKeys { get; set; }
 
+        /// <summary>
+        /// Gets the <see cref="MediaKeys"/> in CSV format.
+        /// </summary>
+        /// <returns>The <see cref="MediaKeys"/> in CSV format.</returns>
         public string GetMediaKeysAsCsv()
         {
             var hasAttachements = this.MediaKeys != null && this.MediaKeys.Any();

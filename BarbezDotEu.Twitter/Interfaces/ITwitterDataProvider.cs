@@ -8,8 +8,20 @@ using BarbezDotEu.Provider.Interfaces;
 
 namespace BarbezDotEu.Twitter.Interfaces
 {
+    /// <summary>
+    /// Defines a blueprint for a data provider that connects to and can call Twitter.com APIs.
+    /// </summary>
     public interface ITwitterDataProvider : IPoliteProvider
     {
+        /// <summary>
+        /// Configures this <see cref="ITwitterDataProvider"/> so that it can successfully communicate with the Twitter.com APIs.
+        /// </summary>
+        /// <param name="twitterConfiguration">The <see cref="TwitterConfiguration"/> to configure this <see cref="ITwitterDataProvider"/> with.</param>
+        /// <remarks>
+        /// Configuration is required before any APIs can be called.
+        /// </remarks>
+        void Configure(TwitterConfiguration twitterConfiguration);
+
         /// <summary>
         /// Queries for occurences of the given symbol found in tweets from the past 7 days.
         /// </summary>

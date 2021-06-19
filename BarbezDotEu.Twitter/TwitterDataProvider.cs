@@ -18,37 +18,60 @@ using BarbezDotEu.Provider.DTO;
 using BarbezDotEu.Twitter.DTO;
 using BarbezDotEu.Twitter.Exceptions;
 using BarbezDotEu.Twitter.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace BarbezDotEu.Twitter
 {
+    /// <summary>
+    /// Implements a data provider that connects to and can call Twitter.com APIs.
+    /// </summary>
     public class TwitterDataProvider : PoliteProvider, ITwitterDataProvider
     {
-        private readonly AuthenticationHeaderValue authorizationHeader;
+        private TwitterConfiguration configuration;
+        private AuthenticationHeaderValue authorizationHeader;
         private readonly MediaTypeWithQualityHeaderValue acceptHeader;
-        private readonly IConfiguration configuration;
-        private readonly long resultsPerRequest;
-        private readonly string searchRecentTweetsUrl;
-        private readonly string searchRecentTweetsFields;
 
-        public TwitterDataProvider(ILogger logger, IConfiguration configuration, IHttpClientFactory httpClientFactory)
-            : base(logger, httpClientFactory)
+        /// <summary>
+        /// Gets the <see cref="TwitterConfiguration"/> this <see cref="TwitterConfiguration"/> uses to communicate to the APIs.
+        /// </summary>
+        private TwitterConfiguration Configuration
+        {
+            get
+            {
+                if (this.configuration == null)
+                {
+                    throw new ApplicationException(
+                        $"An {nameof(TwitterDataProvider)} cannot be used before it is configured. To fix, call the {nameof(TwitterDataProvider)}.{nameof(Configure)} method right after initialization.");
+                }
+
+                return this.configuration;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Configure(TwitterConfiguration configuration)
         {
             this.configuration = configuration;
-            this.acceptHeader = new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json);
+            this.SetRateLimitPerMinute(this.configuration.MaxCallsPerMinute);
             var authorization = this.GetAuthorization().Result;
             this.authorizationHeader = new AuthenticationHeaderValue(authorization.TokenType, authorization.AccessToken);
-            this.SetRateLimitPerMinute(configuration["Twitter:RateLimit:PerMinute"]);
-            this.resultsPerRequest = GetResultsPerRequest(configuration["Twitter:ResultsPerRequest"]);
-            this.searchRecentTweetsUrl = configuration["Twitter:SearchRecentTweets:Url"];
-            this.searchRecentTweetsFields = configuration["Twitter:SearchRecentTweets:TweetFields"];
+        }
+
+        /// <summary>
+        /// Constructs a new <see cref="TwitterDataProvider"/>.
+        /// </summary>
+        /// <param name="logger">A <see cref="ILogger"/> to use for logging.</param>
+        /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> to use.</param>
+        public TwitterDataProvider(ILogger logger, IHttpClientFactory httpClientFactory)
+            : base(logger, httpClientFactory)
+        {
+            this.acceptHeader = new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json);
         }
 
         /// <inheritdoc/>
         public async Task<List<MicroBlogEntry>> GetRecentTweets(string symbol)
         {
-            var queryUrl = $"{this.searchRecentTweetsUrl}{symbol.ToUpperInvariant()}{this.searchRecentTweetsFields}{this.resultsPerRequest}";
+            var queryUrl = $"{this.configuration.SearchRecentTweetsUrl}{symbol.ToUpperInvariant()}{this.configuration.SearchRecentTweetsFields}{this.configuration.ResultsPerRequest}";
             var request = new HttpRequestMessage(HttpMethod.Get, queryUrl);
             request.Headers.Accept.Add(acceptHeader);
             request.Headers.Authorization = this.authorizationHeader;
@@ -59,7 +82,7 @@ namespace BarbezDotEu.Twitter
                 // Ensuring app fails when hitting rate limit.
                 if (result.HttpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    this.logger.LogWarning("Too many requests to Twitter. Erroring out, shutting down.");
+                    base.Logger.LogWarning("Too many requests to Twitter. Erroring out, shutting down.");
                     throw new TwitterDataProviderException(result.HttpResponseMessage.StatusCode.ToString());
                 }
 
@@ -69,8 +92,8 @@ namespace BarbezDotEu.Twitter
                     + " " + response?.StatusCode ?? "No status code given"
                     + " " + response?.Content ?? "No content given";
 
-                this.logger.LogWarning($"Failed request reason: {reason}");
-                this.logger.LogWarning($"Failed request response: {response}");
+                base.Logger.LogWarning($"Failed request reason: {reason}");
+                base.Logger.LogWarning($"Failed request response: {response}");
                 return new List<MicroBlogEntry>();
             }
 
@@ -94,7 +117,7 @@ namespace BarbezDotEu.Twitter
                 var mediaKeys = tweet.Attachements?.GetMediaKeysAsCsv();
                 var cashTags = tweet.TweetEntities?.GetCashTagsAsCsv();
                 var hashTags = tweet.TweetEntities?.GetHashTagsAsCsv();
-                var mentions = tweet.TweetEntities?.GetMentions();
+                var mentions = tweet.TweetEntities?.GetMentionsAsCsv();
 
                 var expandedUrlList = tweet.TweetEntities?.Urls?.Select(x => x.ExpandedUrl);
                 var hasExpandedUrls = expandedUrlList != null && expandedUrlList.Any();
@@ -142,29 +165,13 @@ namespace BarbezDotEu.Twitter
         }
 
         /// <summary>
-        /// From a given string, parses the max. number of results to return per request. If not possible to parse, returns 10.
+        /// Gets the authentication header value parameter.
         /// </summary>
-        /// <param name="resultsPerRequest">The string representation of the value of the maximum number of results per request.</param>
-        /// <returns>The maximum number of results to return per request.</returns>
-        private static long GetResultsPerRequest(string resultsPerRequest)
-        {
-            var success = long.TryParse(resultsPerRequest, out long numberOfResultsPerRequest);
-            if (success)
-                return numberOfResultsPerRequest;
-
-            return 10;
-        }
-
-        /// <summary>
-        /// Gets the authentication header value parameter from a <see cref="IConfiguration"/>.
-        /// </summary>
-        /// <param name="configuration">The <see cref="IConfiguration"/> to source the parameter from.</param>
         /// <returns>The access token.</returns>
         /// <remarks>https://developer.twitter.com/en/docs/authentication/oauth-2-0/application-only</remarks>
         private async Task<PostClientAuthorizeResponse> GetAuthorization()
         {
-            var oAuth2TokenUrl = configuration["Twitter:OAuth2TokenUrl"];
-            var request = new HttpRequestMessage(HttpMethod.Post, oAuth2TokenUrl);
+            var request = new HttpRequestMessage(HttpMethod.Post, this.configuration.OAuth2TokenUrl);
             var content = new Dictionary<string, string>() { { "grant_type", "client_credentials" } };
             request.Content = new FormUrlEncodedContent(content);
             request.Headers.Accept.Add(this.acceptHeader);
@@ -173,7 +180,7 @@ namespace BarbezDotEu.Twitter
             if (response.HasFailed)
             {
                 var error = $"Failed request resulted in the following response (and also, the app will shut down): {response.HttpResponseMessage}";
-                this.logger.LogError(error);
+                base.Logger.LogError(error);
                 throw new TwitterDataProviderException(error);
             }
 
@@ -188,9 +195,7 @@ namespace BarbezDotEu.Twitter
 
         private string GetAuthenticationHeaderValueParameter()
         {
-            var consumerKey = configuration["Twitter:ConsumerKey"];
-            var consumerSecret = configuration["Twitter:ConsumerSecret"];
-            var parameter = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{consumerKey}:{consumerSecret}"));
+            var parameter = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{this.configuration.ConsumerKey}:{this.configuration.ConsumerSecret}"));
             return parameter;
         }
     }
