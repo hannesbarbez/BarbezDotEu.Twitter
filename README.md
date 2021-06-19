@@ -7,7 +7,7 @@ An unofficial, modern, very much work-in-progress client for Twitter APIs.
 
 - [ITwitterDataProvider](#T-BarbezDotEu-Twitter-Interfaces-ITwitterDataProvider 'BarbezDotEu.Twitter.Interfaces.ITwitterDataProvider')
   - [Configure(twitterConfiguration)](#M-BarbezDotEu-Twitter-Interfaces-ITwitterDataProvider-Configure-BarbezDotEu-Twitter-TwitterConfiguration- 'BarbezDotEu.Twitter.Interfaces.ITwitterDataProvider.Configure(BarbezDotEu.Twitter.TwitterConfiguration)')
-  - [GetRecentTweets(symbol)](#M-BarbezDotEu-Twitter-Interfaces-ITwitterDataProvider-GetRecentTweets-System-String- 'BarbezDotEu.Twitter.Interfaces.ITwitterDataProvider.GetRecentTweets(System.String)')
+  - [GetRecentTweets(topic)](#M-BarbezDotEu-Twitter-Interfaces-ITwitterDataProvider-GetRecentTweets-System-String- 'BarbezDotEu.Twitter.Interfaces.ITwitterDataProvider.GetRecentTweets(System.String)')
 - [Tweet](#T-BarbezDotEu-Twitter-DTO-Tweet 'BarbezDotEu.Twitter.DTO.Tweet')
   - [Attachements](#P-BarbezDotEu-Twitter-DTO-Tweet-Attachements 'BarbezDotEu.Twitter.DTO.Tweet.Attachements')
   - [AuthorId](#P-BarbezDotEu-Twitter-DTO-Tweet-AuthorId 'BarbezDotEu.Twitter.DTO.Tweet.AuthorId')
@@ -140,21 +140,21 @@ Configures this [ITwitterDataProvider](#T-BarbezDotEu-Twitter-Interfaces-ITwitte
 Configuration is required before any APIs can be called.
 
 <a name='M-BarbezDotEu-Twitter-Interfaces-ITwitterDataProvider-GetRecentTweets-System-String-'></a>
-### GetRecentTweets(symbol) `method`
+### GetRecentTweets(topic) `method`
 
 ##### Summary
 
-Queries for occurences of the given symbol found in tweets from the past 7 days.
+Queries for occurences of the given topic found in tweets from the past 7 days.
 
 ##### Returns
 
-A list of [MicroBlogEntry](#T-BarbezDotEu-MicroBlog-DTO-MicroBlogEntry 'BarbezDotEu.MicroBlog.DTO.MicroBlogEntry') items corresponding to the given symbol.
+A list of [MicroBlogEntry](#T-BarbezDotEu-MicroBlog-DTO-MicroBlogEntry 'BarbezDotEu.MicroBlog.DTO.MicroBlogEntry') items corresponding to the given topic.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| symbol | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The symbol for which to query. |
+| topic | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The topic for which to query. |
 
 <a name='T-BarbezDotEu-Twitter-DTO-Tweet'></a>
 ## Tweet `type`
@@ -662,7 +662,7 @@ Constructs a new [TwitterConfiguration](#T-BarbezDotEu-Twitter-TwitterConfigurat
 | ---- | ---- | ----------- |
 | maxCallsPerMinute | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates). |
 | resultsPerRequest | [System.Int64](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int64 'System.Int64') | The maximum number of results to return per request. |
-| searchRecentTweetsUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields. |
+| searchRecentTweetsUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields. |
 | searchRecentTweetsFields | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The query fields to query the [SearchRecentTweetsUrl](#P-BarbezDotEu-Twitter-TwitterConfiguration-SearchRecentTweetsUrl 'BarbezDotEu.Twitter.TwitterConfiguration.SearchRecentTweetsUrl') with. |
 | oAuth2TokenUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The OAuth 2 Token URL for authentication. |
 | consumerKey | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The consumer key for authentication. (Get yours from the Twitter.com developer website) |
@@ -681,7 +681,7 @@ Constructs a new [TwitterConfiguration](#T-BarbezDotEu-Twitter-TwitterConfigurat
 | ---- | ---- | ----------- |
 | maxCallsPerMinute | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates). |
 | resultsPerRequest | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The maximum number of results to return per request. |
-| searchRecentTweetsUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields. |
+| searchRecentTweetsUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields. |
 | searchRecentTweetsFields | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The query fields to query the [SearchRecentTweetsUrl](#P-BarbezDotEu-Twitter-TwitterConfiguration-SearchRecentTweetsUrl 'BarbezDotEu.Twitter.TwitterConfiguration.SearchRecentTweetsUrl') with. |
 | oAuth2TokenUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The OAuth 2 Token URL for authentication. |
 | consumerKey | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The consumer key for authentication. (Get yours from the Twitter.com developer website) |
@@ -700,7 +700,7 @@ Constructs a new [TwitterConfiguration](#T-BarbezDotEu-Twitter-TwitterConfigurat
 | ---- | ---- | ----------- |
 | maxCallsPerMinute | [System.Int64](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int64 'System.Int64') | The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates). |
 | resultsPerRequest | [System.Int64](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int64 'System.Int64') | The maximum number of results to return per request. |
-| searchRecentTweetsUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields. |
+| searchRecentTweetsUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields. |
 | searchRecentTweetsFields | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The query fields to query the [SearchRecentTweetsUrl](#P-BarbezDotEu-Twitter-TwitterConfiguration-SearchRecentTweetsUrl 'BarbezDotEu.Twitter.TwitterConfiguration.SearchRecentTweetsUrl') with. |
 | oAuth2TokenUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The OAuth 2 Token URL for authentication. |
 | consumerKey | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The consumer key for authentication. (Get yours from the Twitter.com developer website) |
@@ -783,7 +783,7 @@ A constant representing this package's default implementation for the query fiel
 
 ##### Summary
 
-A constant representing this package's default implementation for the fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields.
+A constant representing this package's default implementation for the fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.
 
 <a name='P-BarbezDotEu-Twitter-TwitterConfiguration-ConsumerKey'></a>
 ### ConsumerKey `property`
@@ -832,7 +832,7 @@ Gets the query fields to query the [SearchRecentTweetsUrl](#P-BarbezDotEu-Twitte
 
 ##### Summary
 
-Gets the fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields.
+Gets the fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.
 
 <a name='M-BarbezDotEu-Twitter-TwitterConfiguration-GetResultsPerRequest-System-String-'></a>
 ### GetResultsPerRequest(resultsPerRequest) `method`
