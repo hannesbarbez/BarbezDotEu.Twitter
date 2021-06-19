@@ -21,6 +21,10 @@
   <ItemGroup>
     <PackageReference Include="BarbezDotEu.MicroBlog" Version="1.0.0" />
     <PackageReference Include="BarbezDotEu.Provider" Version="2.0.2" />
+    <PackageReference Include="Vsxmd" Version="1.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
