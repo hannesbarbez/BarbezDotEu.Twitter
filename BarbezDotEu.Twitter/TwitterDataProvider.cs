@@ -69,9 +69,9 @@ namespace BarbezDotEu.Twitter
         }
 
         /// <inheritdoc/>
-        public async Task<List<MicroBlogEntry>> GetRecentTweets(string symbol)
+        public async Task<List<MicroBlogEntry>> GetRecentTweets(string topic)
         {
-            var queryUrl = $"{this.configuration.SearchRecentTweetsUrl}{symbol.ToUpperInvariant()}{this.configuration.SearchRecentTweetsFields}{this.configuration.ResultsPerRequest}";
+            var queryUrl = $"{this.configuration.SearchRecentTweetsUrl}{topic.ToUpperInvariant()}{this.configuration.SearchRecentTweetsFields}{this.configuration.ResultsPerRequest}";
             var request = new HttpRequestMessage(HttpMethod.Get, queryUrl);
             request.Headers.Accept.Add(acceptHeader);
             request.Headers.Authorization = this.authorizationHeader;

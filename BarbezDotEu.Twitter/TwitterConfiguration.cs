@@ -9,7 +9,7 @@ namespace BarbezDotEu.Twitter
     public class TwitterConfiguration
     {
         /// <summary>
-        /// A constant representing this package's default implementation for the fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields.
+        /// A constant representing this package's default implementation for the fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.
         /// </summary>
         public const string DEFAULTSEARCHRECENTTWEETSURL = "https://api.twitter.com/2/tweets/search/recent?query=";
 
@@ -44,7 +44,7 @@ namespace BarbezDotEu.Twitter
         public long ResultsPerRequest { get; }
 
         /// <summary>
-        /// Gets the fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields.
+        /// Gets the fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.
         /// </summary>
         public string SearchRecentTweetsUrl { get; }
 
@@ -73,7 +73,7 @@ namespace BarbezDotEu.Twitter
         /// </summary>
         /// <param name="maxCallsPerMinute">The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates).</param>
         /// <param name="resultsPerRequest">The maximum number of results to return per request.</param>
-        /// <param name="searchRecentTweetsUrl">The fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields.</param>
+        /// <param name="searchRecentTweetsUrl">The fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.</param>
         /// <param name="searchRecentTweetsFields">The query fields to query the <see cref="SearchRecentTweetsUrl"/> with.</param>
         /// <param name="oAuth2TokenUrl">The OAuth 2 Token URL for authentication.</param>
         /// <param name="consumerKey">The consumer key for authentication. (Get yours from the Twitter.com developer website)</param>
@@ -94,7 +94,7 @@ namespace BarbezDotEu.Twitter
         /// </summary>
         /// <param name="maxCallsPerMinute">The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates).</param>
         /// <param name="resultsPerRequest">The maximum number of results to return per request.</param>
-        /// <param name="searchRecentTweetsUrl">The fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields.</param>
+        /// <param name="searchRecentTweetsUrl">The fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.</param>
         /// <param name="searchRecentTweetsFields">The query fields to query the <see cref="SearchRecentTweetsUrl"/> with.</param>
         /// <param name="oAuth2TokenUrl">The OAuth 2 Token URL for authentication.</param>
         /// <param name="consumerKey">The consumer key for authentication. (Get yours from the Twitter.com developer website)</param>
@@ -115,7 +115,7 @@ namespace BarbezDotEu.Twitter
         /// </summary>
         /// <param name="maxCallsPerMinute">The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates).</param>
         /// <param name="resultsPerRequest">The maximum number of results to return per request.</param>
-        /// <param name="searchRecentTweetsUrl">The fully-qualified URL to use to search for symbols in recent tweets. However, omits the actual search query and query fields.</param>
+        /// <param name="searchRecentTweetsUrl">The fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.</param>
         /// <param name="searchRecentTweetsFields">The query fields to query the <see cref="SearchRecentTweetsUrl"/> with.</param>
         /// <param name="oAuth2TokenUrl">The OAuth 2 Token URL for authentication.</param>
         /// <param name="consumerKey">The consumer key for authentication. (Get yours from the Twitter.com developer website)</param>

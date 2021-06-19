@@ -23,10 +23,10 @@ namespace BarbezDotEu.Twitter.Interfaces
         void Configure(TwitterConfiguration twitterConfiguration);
 
         /// <summary>
-        /// Queries for occurences of the given symbol found in tweets from the past 7 days.
+        /// Queries for occurences of the given topic found in tweets from the past 7 days.
         /// </summary>
-        /// <param name="symbol">The symbol for which to query.</param>
-        /// <returns>A list of <see cref="MicroBlogEntry"/> items corresponding to the given symbol.</returns>
-        Task<List<MicroBlogEntry>> GetRecentTweets(string symbol);
+        /// <param name="topic">The topic for which to query.</param>
+        /// <returns>A list of <see cref="MicroBlogEntry"/> items corresponding to the given topic.</returns>
+        Task<List<MicroBlogEntry>> GetRecentTweets(string topic);
     }
 }
