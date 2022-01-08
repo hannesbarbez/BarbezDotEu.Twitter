@@ -14,15 +14,6 @@ namespace BarbezDotEu.Twitter.Interfaces
     public interface ITwitterDataProvider : IPoliteProvider
     {
         /// <summary>
-        /// Configures this <see cref="ITwitterDataProvider"/> so that it can successfully communicate with the Twitter.com APIs.
-        /// </summary>
-        /// <param name="twitterConfiguration">The <see cref="TwitterConfiguration"/> to configure this <see cref="ITwitterDataProvider"/> with.</param>
-        /// <remarks>
-        /// Configuration is required before any APIs can be called.
-        /// </remarks>
-        void Configure(TwitterConfiguration twitterConfiguration);
-
-        /// <summary>
         /// Queries for occurences of the given topic found in tweets from the past 7 days.
         /// </summary>
         /// <param name="topic">The topic for which to query.</param>

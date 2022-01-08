@@ -27,45 +27,24 @@ namespace BarbezDotEu.Twitter
     /// </summary>
     public class TwitterDataProvider : PoliteProvider, ITwitterDataProvider
     {
-        private TwitterConfiguration configuration;
-        private AuthenticationHeaderValue authorizationHeader;
+        private readonly TwitterConfiguration configuration;
+        private readonly AuthenticationHeaderValue authorizationHeader;
         private readonly MediaTypeWithQualityHeaderValue acceptHeader;
-
-        /// <summary>
-        /// Gets the <see cref="TwitterConfiguration"/> this <see cref="TwitterConfiguration"/> uses to communicate to the APIs.
-        /// </summary>
-        private TwitterConfiguration Configuration
-        {
-            get
-            {
-                if (this.configuration == null)
-                {
-                    throw new ApplicationException(
-                        $"An {nameof(TwitterDataProvider)} cannot be used before it is configured. To fix, call the {nameof(TwitterDataProvider)}.{nameof(Configure)} method right after initialization.");
-                }
-
-                return this.configuration;
-            }
-        }
-
-        /// <inheritdoc/>
-        public void Configure(TwitterConfiguration configuration)
-        {
-            this.configuration = configuration;
-            this.SetRateLimitPerMinute(this.configuration.MaxCallsPerMinute);
-            var authorization = this.GetAuthorization().Result;
-            this.authorizationHeader = new AuthenticationHeaderValue(authorization.TokenType, authorization.AccessToken);
-        }
 
         /// <summary>
         /// Constructs a new <see cref="TwitterDataProvider"/>.
         /// </summary>
         /// <param name="logger">A <see cref="ILogger"/> to use for logging.</param>
         /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> to use.</param>
-        public TwitterDataProvider(ILogger logger, IHttpClientFactory httpClientFactory)
+        /// <param name="configuration">The <see cref="TwitterConfiguration"/> to configure this <see cref="ITwitterDataProvider"/> with.</param>
+        public TwitterDataProvider(ILogger logger, IHttpClientFactory httpClientFactory, TwitterConfiguration configuration)
             : base(logger, httpClientFactory)
         {
             this.acceptHeader = new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json);
+            this.configuration = configuration;
+            this.SetRateLimitPerMinute(this.configuration.MaxCallsPerMinute);
+            var authorization = this.GetAuthorization().Result;
+            this.authorizationHeader = new AuthenticationHeaderValue(authorization.TokenType, authorization.AccessToken);
         }
 
         /// <inheritdoc/>
