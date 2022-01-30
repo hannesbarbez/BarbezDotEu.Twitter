@@ -7,7 +7,7 @@
     <Product>BarbezDotEu.Twitter</Product>
     <PackageId>BarbezDotEu.Twitter</PackageId>
     <Copyright>©2021 Hannes Barbez</Copyright>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <Description>An unofficial, modern, very much work-in-progress client for Twitter APIs.</Description>
     <PackageTags>basic;polite;Twitter;integration;third-party integration;provider;barbez</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -22,6 +22,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BarbezDotEu.MicroBlog" Version="2.0.0" />
-    <PackageReference Include="BarbezDotEu.Provider" Version="3.0.3" />
+    <PackageReference Include="BarbezDotEu.Provider" Version="3.0.4" />
   </ItemGroup>
 </Project>
