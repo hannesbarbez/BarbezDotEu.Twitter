@@ -150,7 +150,10 @@ namespace BarbezDotEu.Twitter
         /// <remarks>https://developer.twitter.com/en/docs/authentication/oauth-2-0/application-only</remarks>
         private async Task<PostClientAuthorizeResponse> GetAuthorization()
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, this.configuration.OAuth2TokenUrl);
+            var request = new HttpRequestMessage(HttpMethod.Post, this.configuration.OAuth2TokenUrl)
+            {
+                Version = new Version(2, 0)
+            };
             var content = new Dictionary<string, string>() { { "grant_type", "client_credentials" } };
             request.Content = new FormUrlEncodedContent(content);
             request.Headers.Accept.Add(this.acceptHeader);
