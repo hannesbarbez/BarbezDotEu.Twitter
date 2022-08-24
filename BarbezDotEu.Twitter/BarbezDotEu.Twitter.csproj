@@ -7,7 +7,7 @@
     <Product>BarbezDotEu.Twitter</Product>
     <PackageId>BarbezDotEu.Twitter</PackageId>
     <Copyright>©2022 Hannes Barbez</Copyright>
-    <Version>4.0.2</Version>
+    <Version>5.0.0</Version>
     <Description>An unofficial, modern, very much work-in-progress client for Twitter APIs.</Description>
     <PackageTags>basic;polite;Twitter;integration;third-party integration;provider;barbez</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

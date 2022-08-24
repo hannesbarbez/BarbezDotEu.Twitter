@@ -61,7 +61,7 @@ namespace BarbezDotEu.Twitter
                 // Ensuring app fails when hitting rate limit.
                 if (result.HttpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    base.Logger.LogWarning("Too many requests to Twitter. Erroring out, shutting down.");
+                    Logger.LogWarning("Too many requests to Twitter. Erroring out, shutting down.");
                     throw new TwitterDataProviderException(result.HttpResponseMessage.StatusCode.ToString());
                 }
 
@@ -71,8 +71,8 @@ namespace BarbezDotEu.Twitter
                     + " " + response?.StatusCode ?? "No status code given"
                     + " " + response?.Content ?? "No content given";
 
-                base.Logger.LogWarning($"Failed request reason: {reason}");
-                base.Logger.LogWarning($"Failed request response: {response}");
+                Logger.LogWarning($"Failed request reason: {reason}");
+                Logger.LogWarning($"Failed request response: {response}");
                 return new List<MicroBlogEntry>();
             }
 
@@ -162,7 +162,7 @@ namespace BarbezDotEu.Twitter
             if (response.HasFailed)
             {
                 var error = $"Failed request resulted in the following response (and also, the app will shut down): {response.HttpResponseMessage}";
-                base.Logger.LogError(error);
+                Logger.LogError(error);
                 throw new TwitterDataProviderException(error);
             }
 
