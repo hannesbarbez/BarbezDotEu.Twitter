@@ -6,7 +6,14 @@ namespace BarbezDotEu.Twitter
     /// <summary>
     /// Implements and houses configuration parameters to correctly connect to and communicate with Twitter.com's services.
     /// </summary>
-    public class TwitterConfiguration
+    /// <remarks>
+    /// Constructs a new <see cref="TwitterConfiguration"/> using given parameters.
+    /// </remarks>
+    /// <param name="maxCallsPerMinute">The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates).</param>
+    /// <param name="resultsPerRequest">The maximum number of results to return per request.</param>
+    /// <param name="consumerKey">The consumer key for authentication. (Get yours from the Twitter.com developer website)</param>
+    /// <param name="consumerSecret">The secret for authentication. (Get yours from the Twitter.com developer website)</param>
+    public class TwitterConfiguration(long maxCallsPerMinute, long resultsPerRequest, string consumerKey, string consumerSecret)
     {
         /// <summary>
         /// Gets the fully-qualified URL to use to search for topics in recent tweets. However, omits the actual search query and query fields.
@@ -26,36 +33,21 @@ namespace BarbezDotEu.Twitter
         /// <summary>
         /// Gets the maximum number of calls allowed per minute (see the Twitter developer website for current rates).
         /// </summary>
-        public long MaxCallsPerMinute { get; }
+        public long MaxCallsPerMinute { get; } = maxCallsPerMinute;
 
         /// <summary>
         /// Gets the maximum number of results to return per request.
         /// </summary>
-        public long ResultsPerRequest { get; }
+        public long ResultsPerRequest { get; } = resultsPerRequest;
 
         /// <summary>
         /// Gets the consumer key for authentication. (Get yours from the Twitter.com developer website)
         /// </summary>
-        internal string ConsumerKey { get; }
+        internal string ConsumerKey { get; } = consumerKey;
 
         /// <summary>
         /// Gets the consumer secret for authentication. (Get yours from the Twitter.com developer website)
         /// </summary>
-        internal string ConsumerSecret { get; }
-
-        /// <summary>
-        /// Constructs a new <see cref="TwitterConfiguration"/> using given parameters.
-        /// </summary>
-        /// <param name="maxCallsPerMinute">The maximum number of calls allowed per minute (see the Twitter.com developer website for current rates).</param>
-        /// <param name="resultsPerRequest">The maximum number of results to return per request.</param>
-        /// <param name="consumerKey">The consumer key for authentication. (Get yours from the Twitter.com developer website)</param>
-        /// <param name="consumerSecret">The secret for authentication. (Get yours from the Twitter.com developer website)</param>
-        public TwitterConfiguration(long maxCallsPerMinute, long resultsPerRequest, string consumerKey, string consumerSecret)
-        {
-            this.MaxCallsPerMinute = maxCallsPerMinute;
-            this.ResultsPerRequest = resultsPerRequest;
-            this.ConsumerKey = consumerKey;
-            this.ConsumerSecret = consumerSecret;
-        }
+        internal string ConsumerSecret { get; } = consumerSecret;
     }
 }
