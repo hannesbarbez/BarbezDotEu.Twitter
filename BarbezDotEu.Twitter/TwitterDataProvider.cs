@@ -71,13 +71,13 @@ namespace BarbezDotEu.Twitter
                     + " " + response?.StatusCode ?? "No status code given"
                     + " " + response?.Content ?? "No content given";
 
-                Logger.LogWarning($"Failed request reason: {reason}");
-                Logger.LogWarning($"Failed request response: {response}");
-                return new List<MicroBlogEntry>();
+                Logger.LogWarning("Failed request reason: {reason}", reason);
+                Logger.LogWarning("Failed request response: {response}", response);
+                return [];
             }
 
             if (result.Content.TwitterMetaData.ResultCount == default)
-                return new List<MicroBlogEntry>();
+                return [];
 
             return TweetsAsMicroBlogEntries(result.Content.Data);
         }
@@ -91,7 +91,7 @@ namespace BarbezDotEu.Twitter
             var results = new List<MicroBlogEntry>();
             foreach (var tweet in tweets)
             {
-                HashSet<string> urls = new();
+                HashSet<string> urls = [];
                 var publicMetrics = tweet.PublicMetrics;
                 var mediaKeys = tweet.Attachements?.GetMediaKeysAsCsv();
                 var cashTags = tweet.TweetEntities?.GetCashTagsAsCsv();
@@ -102,16 +102,16 @@ namespace BarbezDotEu.Twitter
                 var hasExpandedUrls = expandedUrlList != null && expandedUrlList.Any();
                 if (hasExpandedUrls) urls.UnionWith(expandedUrlList);
 
-                var imagesUrlList = tweet.TweetEntities?.Urls?.Where(x => x.Images != null && x.Images.Any()).SelectMany(x => x.Images);
+                var imagesUrlList = tweet.TweetEntities?.Urls?.Where(x => x.Images != null && x.Images.Count != 0).SelectMany(x => x.Images);
                 var hasUrls = imagesUrlList != null && imagesUrlList.Any();
                 if (hasUrls) urls.UnionWith(imagesUrlList.Select(x => x.Url));
 
                 var annotationList = tweet.TweetEntities?.Annotations;
-                var hasAnnotations = annotationList != null && annotationList.Any();
+                var hasAnnotations = annotationList != null && annotationList.Count != 0;
                 var annotations = hasAnnotations ? JsonSerializer.Serialize(annotationList) : null;
 
                 var contextAnnotationList = tweet.ContextAnnotations;
-                var hasContextAnnotations = contextAnnotationList != null && contextAnnotationList.Any();
+                var hasContextAnnotations = contextAnnotationList != null && contextAnnotationList.Count != 0;
                 var contextAnnotations = hasContextAnnotations ? JsonSerializer.Serialize(contextAnnotationList) : null;
 
                 var flatTweet = new MicroBlogEntry(
@@ -161,9 +161,8 @@ namespace BarbezDotEu.Twitter
             var response = await this.Request<PostClientAuthorizeResponse>(request);
             if (response.HasFailed)
             {
-                var error = $"Failed request resulted in the following response (and also, the app will shut down): {response.HttpResponseMessage}";
-                Logger.LogError(error);
-                throw new TwitterDataProviderException(error);
+                Logger.LogError("Failed request resulted in the following response (and also, the app will shut down): {responseHttpResponseMessage}", response.HttpResponseMessage);
+                throw new TwitterDataProviderException(string.Format("Failed request resulted in the following response (and also, the app will shut down): {0}", response.HttpResponseMessage));
             }
 
             return response.Content;

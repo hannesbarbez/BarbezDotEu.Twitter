@@ -24,7 +24,7 @@ namespace BarbezDotEu.Twitter.DTO
         /// <returns>The <see cref="MediaKeys"/> in CSV format.</returns>
         public string GetMediaKeysAsCsv()
         {
-            var hasAttachements = this.MediaKeys != null && this.MediaKeys.Any();
+            var hasAttachements = this.MediaKeys != null && this.MediaKeys.Count != 0;
             var mediaKeys = hasAttachements
                 ? string.Join(",", this.MediaKeys)
                 : null;

@@ -15,7 +15,7 @@ namespace BarbezDotEu.Twitter.DTO
         /// Gets or sets the data.
         /// </summary>
         [JsonPropertyName("data")]
-        public List<Tweet> Data { get; set; } = new List<Tweet>();
+        public List<Tweet> Data { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the meta data.
